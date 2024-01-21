@@ -20,30 +20,6 @@ We disclose the backdoor model we used and the corresponding backdoor attack ima
 - **cross_test_dataset**: cross mode data during training(for some special backdoor attack: wanet, inputaware and so on)
 
 If you want to use the backdoor model, you can download the zip file and unzip in your own workspace. Then you can use the function load_attack_result in the file [save_load_attack.py](./utils/save_load_attack.py) to load the backdoor model, the poisoned train data and the poisoned test data.
-
-[Backdoor Model](https://cuhko365-my.sharepoint.com/:f:/g/personal/backdoorbench_cuhk_edu_cn/EimE1JoHs4ZAivBThQeLkocBs5uPmj20JEtnEIBkJhS0tw?e=gtsc9z)
-
-### ❗V2.0 Updates
-> ✅ **Correction**:
->   1. **Attack** : Fix the bug in [Label Consistent](./attack/lc.py) attack method, in v1.0 version, poisoned data only add adversarial noise without square trigger, which is not consistent with the paper.
-> 
-> ✅ **Code**: 
->    1. **Structure** : Warp attack methods and defense methods into classes and reduce replicated code.
->    2. **Dataset Processing** : Update bd_dataset into bd_dataset_v2, which can handle large scale dataset more efficently.
->    3. **Poison Data Generation** : Provide necessary code to generate poisoned dataset for attack methods (see ./resource folder, we have seperate readme files).
->    4. **Models** : We add VGG19_bn, ConvNeXT_tiny, ViT_B_16.
->    
-> ✅ **Methods**: 
->    1. **Attack** :Add 4 new attack methods: [Blind](./attack/blind.py), [BPP](./attack/bpp.py), [LIRA](./attack/lira.py), [TrojanNN](./attack/trojannn.py). (Totally 12 attack methods now).
->    2. **Defense** :Add 6 new defense methods: [CLP](./defense/clp.py), [D-BR](./defense/d-br.py), [D-ST](./defense/d-st.py), [EP](./defense/ep.py), [I-BAU](./defense/i-bau.py), [BNP](./defense/bnp.py). (Totally 15 defense methods now).
->    
-> ✅ **Analysis Tools** : 
->    1. **Data Analysis** : Add 2 new methods: [UMAP](./analysis/visual_umap.py), [Image Quality](./analysis/visual_quality.py)
->    2. **Models Analysis** : Add 9 new methods: [Activated Image](./analysis/visual_act.py), [Feature Visualization](./analysis/visual_fv.py), [Feature Map](./analysis/visual_fm.py), [Activation Distribution](./analysis/visual_actdist.py), [Trigger Activation Change](./analysis/visual_tac.py), [Lipschitz Constant](./analysis/visual_lips.py), [Loss Landscape](./analysis/visual_landscape.py), [Network Structure](./analysis/visual_network.py), [Eigenvalues of Hessian](./analysis/visual_hessian.py)
->    3. **Evaluation Analysis** : Add 2 new methods: [Confusion Matrix](./analysis/visual_cm.py), [Metric](./analysis/visual_metric.py)
->  
-> 🔲 Comprehensive evaluations will be coming soon...
-
 ### ❗ For V1.0 please check [here](https://github.com/SCLBD/BackdoorBench/tree/v1)
 
 <font size=5><center><b> Table of Contents </b> </center></font>
@@ -75,21 +51,6 @@ If you want to use the backdoor model, you can download the zip file and unzip i
 <a href="#top">[Back to top]</a>
 
 BackdoorBench has the following features:
-
-⭐️  **Methods**:
-  - 12 Backdoor attack methods: [BadNets](./attack/badnet.py), [Blended](./attack/blended.py), [Blind](./attack/blind.py), [BPP](./attack/bpp.py), [Input-aware](./attack/inputaware.py), [Label Consistent](./attack/lc.py), [Low Frequency](./attack/lf.py), [LIRA](./attack/lira.py), [SIG](./attack/sig.py), [SSBA](./attack/ssba.py), [TrojanNN](./attack/trojannn.py), [WaNet](./attack/wanet.py)
-  - 15 Backdoor defense methods:  [FT](./defense/ft.py), [Spectral](./defense/spectral.py), [AC](./defense/ac.py), [FP](./defense/fp.py), [ABL](./defense/abl.py), [NAD](./defense/nad.py), [NC](nc), [DBD]((./defense/dbd.py)), [ANP](./defense/anp.py),[CLP](./defense/clp.py), [D-BR](./defense/d-br.py), [D-ST](./defense/d-st.py), [EP](./defense/ep.py), [I-BAU](./defense/i-bau.py), [BNP](./defense/bnp.py)
-
-⭐️ **Datasets**: CIFAR-10, CIFAR-100, GTSRB, Tiny ImageNet 
-
-⭐️ **Models**: PreAct-Resnet18, VGG19_bn, ConvNeXT_tiny, ViT_B_16, VGG19, DenseNet-161, MobileNetV3-Large, EfficientNet-B3
-
-
-⭐️ **Learboard**: We provide a [**public leaderboard**](http://backdoorbench.com/leader_cifar10) of evaluating all backdoor attacks against all defense methods.
-
-BackdoorBench will be continuously updated to track the lastest advances of backddor learning.
-The implementations of more backdoor methods, as well as their evaluations are on the way. **You are welcome to contribute your backdoor methods to BackdoorBench.**
-
 
 
 ## Installation
@@ -151,51 +112,6 @@ python ./defense/abl.py --result_file badnet_0_1 --yaml_path ./config/defense/ab
 
 If you want to change the args, you can both specify them in command line and in corresponding YAML config file (eg. [default.yaml](./config/defense/abl/default.yaml)).(They are the defaults we used if no args are specified in command line.)
 The detailed descriptions for each attack may be put into the `add_args` function in each script.
-
-## Supported attacks
-
-<a href="#top">[Back to top]</a>
-
-|                  | File name                               | Paper                                                                                                                                                                                                                                                                                                                                                         |
-|------------------|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| BadNets          | [badnet.py](./attack/badnet.py)         | [BadNets: Identifying Vulnerabilities in  the Machine Learning Model Supply Chain](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwir55bv0-X2AhVJIjQIHYTjAMgQFnoECCEQAQ&url=https%3A%2F%2Fmachine-learning-and-security.github.io%2Fpapers%2Fmlsec17_paper_51.pdf&usg=AOvVaw1Cu3kPaD0a4jgvwkPCX63j) IEEE Access 2019 |
-| Blended          | [blended.py](./attack/blended.py)       | [Targeted Backdoor Attacks on Deep  Learning Systems Using Data Poisoning](https://arxiv.org/abs/1712.05526v1) Arxiv 2017                                                                                                                                                                                                                                     |
-| Blind            | [blind.py](./attack/blind.py)           | [Blind Backdoors in Deep Learning Models](https://www.cs.cornell.edu/~shmat/shmat_usenix21blind.pdf) USENIX 2021                                                                                                                                                                                                                                              |
-| BPP              | [bpp.py](./attack/bpp.py)               | [BppAttack: Stealthy and Efficient Trojan Attacks against Deep Neural Networks via Image Quantization and Contrastive Adversarial Learning](https://openaccess.thecvf.com/content/CVPR2022/papers/Wang_BppAttack_Stealthy_and_Efficient_Trojan_Attacks_Against_Deep_Neural_Networks_CVPR_2022_paper.pdf) CVPR 2022                                            |
-| Input-aware      | [inputaware.py](./attack/inputaware.py) | [Input-Aware Dynamic Backdoor Attack](https://proceedings.neurips.cc/paper/2020/file/234e691320c0ad5b45ee3c96d0d7b8f8-Paper.pdf) NeurIPS 2020                                                                                                                                                                                                                 |
-| Label Consistent | [lc.py](./attack/lc.py)                 | [Label-Consistent Backdoor Attacks](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjvwKTx2bH4AhXCD0QIHVMWApkQFnoECAsQAQ&url=https%3A%2F%2Farxiv.org%2Fabs%2F1912.02771&usg=AOvVaw0NbPR9lguGTsEn3ZWtPBDR) Arxiv 2019                                                                                                 |
-| Low Frequency    | [lf.py](./attack/lf.py)                 | [Rethinking the Backdoor Attacks’ Triggers: A Frequency Perspective](https://openaccess.thecvf.com/content/ICCV2021/papers/Zeng_Rethinking_the_Backdoor_Attacks_Triggers_A_Frequency_Perspective_ICCV_2021_paper.pdf) ICCV2021                                                                                                                                |
-| LIRA             | [lira.py](./attack/lira.py)             | [LIRA: Learnable, Imperceptible and Robust Backdoor Attacks](https://openaccess.thecvf.com/content/ICCV2021/papers/Doan_LIRA_Learnable_Imperceptible_and_Robust_Backdoor_Attacks_ICCV_2021_paper.pdf) ICCV 2021                                                                                                                                               |
-| SIG              | [sig.py](./attack/sig.py)               | [A new backdoor attack in  cnns by training set corruption](https://ieeexplore.ieee.org/document/8802997) ICIP 2019                                                                                                                                                                                                                                           |
-| SSBA             | [ssba.py](./attack/ssba.py)             | [Invisible Backdoor Attack with  Sample-Specific Triggers](https://openaccess.thecvf.com/content/ICCV2021/papers/Li_Invisible_Backdoor_Attack_With_Sample-Specific_Triggers_ICCV_2021_paper.pdf) ICCV 2021                                                                                                                                                    |
-| TrojanNN         | [trojannn.py](./attack/trojannn.py)     | [Trojaning Attack on Neural Networks](https://docs.lib.purdue.edu/cgi/viewcontent.cgi?article=2782&context=cstech) NDSS 2018                                                                                                                                                                                               |
-| WaNet            | [wanet.py](./attack/wanet.py)           | [WaNet -- Imperceptible  Warping-Based Backdoor Attack](https://openreview.net/pdf?id=eEn8KTtJOx) ICLR 2021                                                                                                                                                                                                                                                   |
-
-## Supported defenses 
-
-<a href="#top">[Back to top]</a>
-
-|       | File name                 | Paper                |
-| :------------- |:-------------|:-----|
-| FT| [ft.py](./defense/ft.py) | standard fine-tuning|
-| FP | [fp.py](./defense/fp.py) | [Fine-Pruning: Defending Against Backdooring Attacks on Deep Neural Networks](https://link.springer.com/chapter/10.1007/978-3-030-00470-5_13) RAID 2018 |
-| NAD      | [nad.py](./defense/nad.py)                | [Neural Attention Distillation: Erasing Backdoor Triggers From Deep Neural Networks](https://openreview.net/pdf?id=9l0K4OM-oXE) ICLR 2021 |
-| NC       | [nc.py](./defense/nc.py)                   | [Neural Cleanse: Identifying And Mitigating Backdoor Attacks In Neural Networks](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8835365), IEEE S&P 2019 |
-| ANP      | [anp.py](./defense/anp.py)                | [Adversarial Neuron Pruning Purifies Backdoored Deep Models](https://proceedings.neurips.cc/paper/2021/file/8cbe9ce23f42628c98f80fa0fac8b19a-Paper.pdf) NeurIPS 2021 |
-| AC       | [ac.py](./defense/ac.py)                   | [Detecting Backdoor Attacks on Deep Neural Networks by Activation Clustering](http://ceur-ws.org/Vol-2301/paper_18.pdf) ceur-ws 2018 |
-| Spectral | [spectral.py](./defense/spectral.py) | [Spectral Signatures in Backdoor Attacks](https://proceedings.neurips.cc/paper/2018/file/280cf18baf4311c92aa5a042336587d3-Paper.pdf) NeurIPS 2018 |
-| ABL      | [abl.py](./defense/abl.py)                | [Anti-Backdoor Learning: Training Clean Models on Poisoned Data](https://proceedings.neurips.cc/paper/2021/file/7d38b1e9bd793d3f45e0e212a729a93c-Paper.pdf) NeurIPS 2021 |
-| DBD | [dbd.py](./defense/dbd.py) | [Backdoor Defense Via Decoupling The Training Process](https://arxiv.org/pdf/2202.03423.pdf) ICLR 2022 |
-| CLP | [clp.py](./defense/clp.py) | [Data-free backdoor removal based on channel lipschitzness](https://arxiv.org/pdf/2208.03111.pdf) ECCV 2022 |
-| I-BAU | [i-bau.py](./defense/i-bau.py) | [Adversarial unlearning of backdoors via implicit hypergradient](https://arxiv.org/pdf/2110.03735.pdf) ICLR 2022 |
-| D-BR,D-ST | [d-br.py](./defense/d-br.py) [d-st.py](./defense/d-st.py) | [Effective backdoor defense by exploiting sensitivity of poisoned samples](https://proceedings.neurips.cc/paper_files/paper/2022/file/3f9bbf77fbd858e5b6e39d39fe84ed2e-Paper-Conference.pdf) NeurIPS 2022 |
-| EP,BNP | [ep.py](./defense/ep.py) [bnp.py](./defense/bnp.py) | [Pre-activation Distributions Expose Backdoor Neurons](https://proceedings.neurips.cc/paper_files/paper/2022/file/76917808731dae9e6d62c2a7a6afb542-Paper-Conference.pdf) NeurIPS 2022 |
-
-
-
-
-
-
 
 
 <a href="#top">[Back to top]</a>

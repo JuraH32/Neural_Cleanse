@@ -20,7 +20,7 @@ class labelConsistentAttack(object):
     def __init__(self, trigger = "all-corners", reduced_amplitude=1.0):
 
         assert 0 <= reduced_amplitude <= 1, "reduced_amplitude is in [0,1] !"
-        logging.warning("Original code only give trigger in 32 * 32. For other image size, we do resize to the mask with InterpolationMode.NEAREST. \nIf you do not agree with our implememntation, you can rewrite utils/bd_img_transform/lc.py in your own way.")
+        logging.warning("Original code only give trigger in 32 * 32. For other image size, we do resize to the mask with InterpolationMode.NEAREST. \n")
         logging.info(f"For Label-consistent attack, reduced_amplitude (transparency) = {reduced_amplitude}, 0 means no square trigger, 1 means no reduction.")
         if reduced_amplitude == 0:
             logging.warning("!!! reduced_amplitude = 0, note that this mean NO square trigger is added after adversarial attack to origianl image!!!")
